@@ -2,13 +2,60 @@
 
 Personal fork of [quicknir/nikud](https://github.com/quicknir/nikud).
 
+> **Note:** The upstream `setup.sh` uses micromamba/conda to install tools. On Mac, use Homebrew instead (see below).
+
 ## Mac Setup
 
-1. Clone to `~/nikud`: `git clone git@github.com:talf301/nikud.git ~/nikud`
-2. Init submodules: `git submodule update --init --recursive`
-3. Symlink zshenv: `ln -sf ~/nikud/zsh/zdotdir/my_env.zsh ~/.zshenv`
-4. Create `~/nikud/zsh/zdotdir/ignore_env.zsh` with machine-specific paths (PATH entries, API tokens, etc.)
-5. Open a new terminal — done
+### 1. Clone and wire up
+
+```bash
+git clone git@github.com:talf301/nikud.git ~/nikud
+cd ~/nikud && git submodule update --init --recursive
+ln -sf ~/nikud/zsh/zdotdir/my_env.zsh ~/.zshenv
+```
+
+### 2. Install tools via Homebrew
+
+These are used by the zsh config and must be on PATH:
+
+```bash
+# Core tools used heavily in fzf/shell config
+brew install eza        # ls replacement (alias ls, ll)
+brew install bat        # cat replacement (alias cat, less)
+brew install fd         # find replacement (used by fzf widgets)
+brew install fzf        # fuzzy finder (ctrl-t, ctrl-j, ctrl-r, ctrl-s)
+brew install ripgrep    # grep replacement (used by ctrl-s rg widget)
+
+# Shell / prompt
+brew install zsh
+# powerlevel10k, fzf-tab, fast-syntax-highlighting, zsh-autosuggestions
+# are bundled as submodules — no separate install needed
+
+# Editor
+brew install neovim
+
+# Optional but nice
+brew install lazygit    # TUI git client (lazygit function in my_rc.zsh)
+brew install atuin      # shell history sync (disabled by default if not installed)
+```
+
+### 3. Create machine-specific config
+
+Create `~/nikud/zsh/zdotdir/ignore_env.zsh` (gitignored) with your machine-specific paths:
+
+```zsh
+# Example ignore_env.zsh
+eval "$(/opt/homebrew/bin/brew shellenv)"
+path=("$HOME/.juliaup/bin" $path)
+path=("$HOME/go/bin" $path)
+path=("$HOME/.local/bin" "$HOME/bin" $path)
+[[ -f "$HOME/.cargo/env" ]] && source "$HOME/.cargo/env"
+export PATH
+```
+
+### 4. Open a new terminal — done
+
+To reconfigure the p10k prompt: `p10k configure`
 
 ---
 

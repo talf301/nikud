@@ -104,7 +104,5 @@ function maybe_source () {
 # not recognize the bookmark and the preview will fail)
 maybe_source "$ZDOTDIR/ignore_env.zsh"
 
-export FZF_DEFAULT_OPTS="--color=16,fg:11,bg:-1,hl:1:regular,hl+:1,bg+:7,fg+:-1:regular:underline --color=prompt:4,pointer:13,marker:13,spinner:3,info:3 --bind 'ctrl-l:accept' --ansi --layout default"
-
 # A per host file that optionally gets sourced
 maybe_source $ZDOTDIR/host_$(hostname)_env.zsh

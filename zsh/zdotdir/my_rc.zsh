@@ -31,6 +31,41 @@ alias vim=nvim
 
 alias hist-dur='history -iD 0 | fzf'
 
+# Handy reference, courtesy of https://github.com/seebi/dircolors-solarized
+# SOLARIZED HEX     16/8 TERMCOL  XTERM/HEX   L*A*B      sRGB        HSB
+# --------- ------- ---- -------  ----------- ---------- ----------- -----------
+# base03    #002b36  8/4 brblack  234 #1c1c1c 15 -12 -12   0  43  54 193 100  21
+# base02    #073642  0/4 black    235 #262626 20 -12 -12   7  54  66 192  90  26
+# base01    #586e75 10/7 brgreen  240 #4e4e4e 45 -07 -07  88 110 117 194  25  46
+# base00    #657b83 11/7 bryellow 241 #585858 50 -07 -07 101 123 131 195  23  51
+# base0     #839496 12/6 brblue   244 #808080 60 -06 -03 131 148 150 186  13  59
+# base1     #93a1a1 14/4 brcyan   245 #8a8a8a 65 -05 -02 147 161 161 180   9  63
+# base2     #eee8d5  7/7 white    254 #d7d7af 92 -00  10 238 232 213  44  11  93
+# base3     #fdf6e3 15/7 brwhite  230 #ffffd7 97  00  10 253 246 227  44  10  99
+# yellow    #b58900  3/3 yellow   136 #af8700 60  10  65 181 137   0  45 100  71
+# orange    #cb4b16  9/3 brred    166 #d75f00 50  50  55 203  75  22  18  89  80
+# red       #dc322f  1/1 red      160 #d70000 50  65  45 220  50  47   1  79  86
+# magenta   #d33682  5/5 magenta  125 #af005f 50  65 -05 211  54 130 331  74  83
+# violet    #6c71c4 13/5 brmagenta 61 #5f5faf 50  15 -45 108 113 196 237  45  77
+# blue      #268bd2  4/4 blue      33 #0087ff 55 -10 -45  38 139 210 205  82  82
+# cyan      #2aa198  6/6 cyan      37 #00afaf 60 -35 -05  42 161 152 175  74  63
+# green     #859900  2/2 green     64 #5f8700 60 -20  65 133 153   0  68 100  60
+
+# Usage: palette
+palette() {
+    local -a colors
+    for i in {000..16}; do
+        colors+=("%F{$i}hello: $i%f")
+    done
+    print -cP $colors
+}
+
+# Usage: printc COLOR_CODE
+printc() {
+    local color="%F{$1}"
+    echo -E ${(qqqq)${(%)color}}
+}
+
 # Safe ops. Ask the user before doing anything destructive.
 alias cp='cp -i'
 alias ln='ln -i'
@@ -167,8 +202,10 @@ setopt printexitvalue       # useful to get more info on errors
 #
 setopt LONG_LIST_JOBS     # List jobs in the long format by default.
 setopt NOTIFY             # Report status of background jobs immediately.
+setopt AUTO_RESUME        # Attempt to resume existing job before creating a new process.
 unsetopt BG_NICE          # Don't run all background jobs at a lower priority.
 unsetopt HUP              # Don't kill jobs on shell exit.
+unsetopt CHECK_JOBS       # Don't report on jobs when shell exits.
 
 # editor
 # by default backspace is vi-delete-char which has some pretty funky behavior
@@ -187,6 +224,7 @@ bindkey -M viopp "^[[4~" end-of-line
 bindkey -M visual "^[[4~" end-of-line
 
 # history
+setopt BANG_HIST                 # Treat the '!' character specially during expansion.
 setopt EXTENDED_HISTORY          # Write the history file in the ':start:elapsed;command' format.
 setopt SHARE_HISTORY             # Share history between all sessions.
 setopt HIST_EXPIRE_DUPS_FIRST    # Expire a duplicate event first when trimming history.
@@ -205,6 +243,8 @@ SAVEHIST=10000  # The maximum number of events to save in the history file.
 # directory
 setopt AUTO_CD              # Allows ~nikud
 setopt AUTO_PUSHD           # Push the old directory onto the stack on cd. Needed for my-cd-rotate
+setopt PUSHD_SILENT         # Do not print the directory stack after pushd or popd.
+setopt PUSHD_TO_HOME        # Push to home directory when no argument is given.
 setopt CDABLE_VARS          # Allows cd nikud instead of cd ~nikud
 setopt MULTIOS              # Write to multiple descriptors.
 setopt EXTENDED_GLOB        # Use extended globbing syntax.
@@ -246,6 +286,7 @@ widget-and-bind -v '^J' fzf-cd-widget
 widget-and-bind -v '^T' fzf-file-widget
 widget-and-bind -v '^R' fzf-history-widget
 widget-and-bind -v '^S' fzf-rg-widget
+widget-and-bind -M vicmd 's' fzf-rg-widget
 
 # Change cursor shape for different vi modes.
 # https://unix.stackexchange.com/questions/433273/changing-cursor-style-based-on-mode-in-both-zsh-and-vim

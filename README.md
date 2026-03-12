@@ -1,3 +1,17 @@
+# My nikud fork
+
+Personal fork of [quicknir/nikud](https://github.com/quicknir/nikud).
+
+## Mac Setup
+
+1. Clone to `~/nikud`: `git clone git@github.com:talf301/nikud.git ~/nikud`
+2. Init submodules: `git submodule update --init --recursive`
+3. Symlink zshenv: `ln -sf ~/nikud/zsh/zdotdir/my_env.zsh ~/.zshenv`
+4. Create `~/nikud/zsh/zdotdir/ignore_env.zsh` with machine-specific paths (PATH entries, API tokens, etc.)
+5. Open a new terminal — done
+
+---
+
 # nikud
 A dotfiles repo
 

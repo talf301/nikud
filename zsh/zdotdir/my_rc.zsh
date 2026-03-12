@@ -16,7 +16,7 @@ fi
 # To customize prompt, run `p10k configure` or edit $ZDOTDIR/.p10k.zsh.
 [[ ! -f "${ZDOTDIR}/.p10k.zsh" ]] || source "${ZDOTDIR}/.p10k.zsh"
 
-eval "$(atuin init zsh --disable-ctrl-r --disable-up-arrow)"
+(( $+commands[atuin] )) && eval "$(atuin init zsh --disable-ctrl-r --disable-up-arrow)"
 
 # *** ALIASES ***
 alias ls='eza --icons --group-directories-first'
@@ -134,7 +134,7 @@ source $ZDOTDIR/clipboard.zsh
 
 # We want to call this before sourcing ignore/host specific file in case they want to
 # activate environments
-eval "$(micromamba shell hook --shell zsh)"
+(( $+commands[micromamba] )) && eval "$(micromamba shell hook --shell zsh)"
 
 # A separate file that gets sourced; convenient for putting things you may not want to upstream
 maybe_source $ZDOTDIR/ignore_rc.zsh

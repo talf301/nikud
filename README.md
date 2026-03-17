@@ -37,7 +37,14 @@ brew install neovim
 # Optional but nice
 brew install lazygit    # TUI git client (lazygit function in my_rc.zsh)
 brew install atuin      # shell history sync (disabled by default if not installed)
+
+# GNU coreutils — macOS ships BSD tools; the fzf history widget (ctrl-r) requires
+# GNU tac. Install coreutils and expose it without the 'g' prefix via ignore_env.zsh
+brew install coreutils
 ```
+
+> **After installing coreutils**, run `make_hist_color_file` once in a new shell to
+> generate the syntax-highlighted history file that `ctrl-r` reads from.
 
 ### 3. Create machine-specific config
 
@@ -45,7 +52,10 @@ Create `~/nikud/zsh/zdotdir/ignore_env.zsh` (gitignored) with your machine-speci
 
 ```zsh
 # Example ignore_env.zsh
-eval "$(/opt/homebrew/bin/brew shellenv)"
+
+# GNU coreutils without 'g' prefix (required for tac, used by fzf history widget)
+path[1,0]=/opt/homebrew/opt/coreutils/libexec/gnubin
+
 path=("$HOME/.juliaup/bin" $path)
 path=("$HOME/go/bin" $path)
 path=("$HOME/.local/bin" "$HOME/bin" $path)

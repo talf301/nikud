@@ -106,3 +106,5 @@ maybe_source "$ZDOTDIR/ignore_env.zsh"
 
 # A per host file that optionally gets sourced
 maybe_source $ZDOTDIR/host_$(hostname)_env.zsh
+
+eval "$(/opt/homebrew/bin/brew shellenv zsh)"

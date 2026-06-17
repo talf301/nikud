@@ -332,3 +332,5 @@ if [[ -n "$TMUX" ]]; then
   }
   add-zsh-hook chpwd __tmux_update_current_path
 fi
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"

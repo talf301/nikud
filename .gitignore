@@ -2,6 +2,7 @@
 zsh/zdotdir/.zcompdump
 zsh/zdotdir/.zsh_history
 zsh/zdotdir/.zsh_history.color
+zsh/zdotdir/.zsh_sessions/
 zsh/zdotdir/.zcompcache
 zsh/zdotdir/.zcompdump.zwc
 zsh/zdotdir/.chpwd-recent-dirs

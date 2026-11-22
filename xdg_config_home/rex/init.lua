@@ -19,8 +19,8 @@ rex.action{
   end,
 }
 
--- cmd+p is the peek (the main attention surface); the picker takes the peek's old key.
-rex.bind("cmd+shift+p", "rexboard_picker")
+-- No key: cmd+p is the peek (the main attention surface), and cmd+shift+p is the
+-- app's command palette, which lists this action.
 
 -- Left Option is remapped to ctrl+alt+cmd (Karabiner), so Rex's alt+cmd defaults
 -- are unreachable. Option+hjkl focuses AeroSpace windows everywhere; while Rex is
